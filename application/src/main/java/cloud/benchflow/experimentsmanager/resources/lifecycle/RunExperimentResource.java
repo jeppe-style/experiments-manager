@@ -106,8 +106,8 @@ public class RunExperimentResource {
 
                 java.nio.file.Path benchmarkPath =
                         Paths.get("./tmp").resolve(experiment.getExperimentId())
-                                          .resolve("benchflow-benchmark.jar");
-                                          //.resolve(compatibleBenchmarkName + ".jar");
+//                                          .resolve("benchflow-benchmark.jar");
+                                          .resolve(compatibleBenchmarkName + ".jar");
 
                 FileUtils.copyInputStreamToFile(fabanBenchmark, benchmarkPath.toFile());
 
@@ -137,10 +137,10 @@ public class RunExperimentResource {
                         while (runId == null) {
                             try {
 //                                runId = new RunId(benchmarkName,"foo");
-//                                runId = faban.submit(compatibleBenchmarkName, t.getTrialId().replace('.', '-'),
-//                                                      fabanConfigPath.toFile());
-                                runId = faban.submit("benchflow-benchmark", "benchflow-benchmark",
-                                        fabanConfigPath.toFile());
+                                runId = faban.submit(compatibleBenchmarkName, t.getTrialId().replace('.', '-'),
+                                                      fabanConfigPath.toFile());
+//                                runId = faban.submit("benchflow-benchmark", "benchflow-benchmark",
+//                                        fabanConfigPath.toFile());
                             } catch (FabanClientException e) {
                                 if (retries > 0) retries--;
                                 else {
