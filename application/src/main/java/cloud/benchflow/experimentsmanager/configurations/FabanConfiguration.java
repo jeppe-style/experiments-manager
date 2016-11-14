@@ -4,8 +4,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 26/11/15.
+ *         <p>
+ *         Created on 26/11/15.
  */
 public class FabanConfiguration {
 
@@ -16,7 +16,7 @@ public class FabanConfiguration {
     @NotEmpty
     private String address;
 
-	private int submitRetries;
+    private int submitRetries;
 
     public String getAddress() {
         return address;
@@ -26,33 +26,33 @@ public class FabanConfiguration {
         this.address = address;
     }
 
-	/**
-	 * @return the user
-	 */
-	public String getUser() {
-		return user;
-	}
+    /**
+     * @return the user
+     */
+    public String getUser() {
+        return user;
+    }
 
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(String user) {
-		this.user = user;
-	}
+    /**
+     * @param user the user to set
+     */
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     /**
      * @return the number of retries for the submission of a driver

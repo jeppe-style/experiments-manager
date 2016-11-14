@@ -5,8 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 13/02/16.
+ *         <p>
+ *         Created on 13/02/16.
  */
 public class BenchFlowEnvConfiguration {
 

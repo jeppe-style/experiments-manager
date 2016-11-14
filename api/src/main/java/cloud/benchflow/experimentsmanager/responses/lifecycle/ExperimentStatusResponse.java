@@ -6,8 +6,8 @@ import java.util.List;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 09/04/16.
+ *         <p>
+ *         Created on 09/04/16.
  */
 public class ExperimentStatusResponse {
 
@@ -33,7 +33,9 @@ public class ExperimentStatusResponse {
         this.experimentId = experimentId;
     }
 
-    public void setExperimentStatus(String status) { this.status = status; }
+    public void setExperimentStatus(String status) {
+        this.status = status;
+    }
 
     public List<TrialStatusResponse> getTrialsStatus() {
         return trialsStatus;

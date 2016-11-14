@@ -1,7 +1,7 @@
 package cloud.benchflow.experimentsmanager.resources.lifecycle;
 
-import cloud.benchflow.experimentsmanager.db.ExperimentsDAO;
 import cloud.benchflow.experimentsmanager.db.DbManager;
+import cloud.benchflow.experimentsmanager.db.ExperimentsDAO;
 import cloud.benchflow.experimentsmanager.db.entities.Experiment;
 import cloud.benchflow.experimentsmanager.db.entities.Trial;
 import cloud.benchflow.experimentsmanager.manager.AsyncRunExperiment;
@@ -10,8 +10,8 @@ import cloud.benchflow.experimentsmanager.utils.BenchFlowExperimentArchiveExtrac
 import cloud.benchflow.experimentsmanager.utils.DriversMaker;
 import cloud.benchflow.experimentsmanager.utils.ExperimentConfiguration;
 import cloud.benchflow.experimentsmanager.utils.exceptions.ArchiveExtractionException;
-import cloud.benchflow.minio.BenchFlowMinioClient;
 import cloud.benchflow.faban.client.FabanClient;
+import cloud.benchflow.minio.BenchFlowMinioClient;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -22,24 +22,23 @@ import org.yaml.snakeyaml.Yaml;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipInputStream;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 05/03/16.
+ *         <p>
+ *         Created on 05/03/16.
  */
 @Path("run")
 public class RunExperimentResource {
 
-    private static Logger logger = LoggerFactory.getLogger(RunExperimentResource.class.getName());
-
     public static final String USER = "BenchFlow";
-
+    private static Logger logger = LoggerFactory.getLogger(RunExperimentResource.class.getName());
     private BenchFlowMinioClient minio;
     private DbManager db;
     private FabanClient faban;
@@ -78,7 +77,7 @@ public class RunExperimentResource {
     public ExperimentIdResponse runAsync(@PathParam("experimentName") String experimentName,
                                          @FormDataParam("experiment") InputStream expArchive)
 
-    throws IOException {
+            throws IOException {
 
 
         // check that the arguments are valid
@@ -124,11 +123,11 @@ public class RunExperimentResource {
 
         try {
 
-           minio.saveTestConfigurationForExperiment(experiment.getMinioExperimentId(), experiment.getExperimentNumber(), expConfig);
-           minio.saveDeploymentDescriptorForExperiment(experiment.getMinioExperimentId(), experiment.getExperimentNumber(), deploymentDescriptor);
-           runExperimentsPool.submit(new AsyncRunExperiment(experiment, experimentsDAO, minio, faban, driversMaker, submitRunsPool, submitRetries));
+            minio.saveTestConfigurationForExperiment(experiment.getMinioExperimentId(), experiment.getExperimentNumber(), expConfig);
+            minio.saveDeploymentDescriptorForExperiment(experiment.getMinioExperimentId(), experiment.getExperimentNumber(), deploymentDescriptor);
+            runExperimentsPool.submit(new AsyncRunExperiment(experiment, experimentsDAO, minio, faban, driversMaker, submitRunsPool, submitRetries));
 
-        } catch(Exception e) {
+        } catch (Exception e) {
 
             // TODO - make this exception more specific
 

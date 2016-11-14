@@ -1,9 +1,8 @@
 package cloud.benchflow.experimentsmanager.resources.lifecycle;
 
 import cloud.benchflow.experimentsmanager.db.DbManager;
-import cloud.benchflow.experimentsmanager.db.entities.Experiment;
-import cloud.benchflow.experimentsmanager.testUtils.SetUpMocks;
-import cloud.benchflow.experimentsmanager.testUtils.TestArchive;
+import cloud.benchflow.experimentsmanager.testutils.SetUpMocks;
+import cloud.benchflow.experimentsmanager.testutils.TestArchive;
 import cloud.benchflow.experimentsmanager.utils.DriversMaker;
 import cloud.benchflow.faban.client.FabanClient;
 import cloud.benchflow.minio.BenchFlowMinioClient;
@@ -14,13 +13,12 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import javax.ws.rs.WebApplicationException;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
@@ -50,18 +48,21 @@ public class RunExperimentResourceTest {
 //            ConfigOverride.config("minio.address", "localhost"),
 //            ConfigOverride.config("benchflowEnv.config.yml", "src/test/resources/app/config.yml")
 //            );
-
-    // TODO - mock the services below
-    @Mock private BenchFlowMinioClient minioMock;
-    @Mock private DbManager dbMock;
-    @Mock private FabanClient fabanMock;
-    @Mock private DriversMaker driversMakerMock;
-    @Mock(name = "runExperimentsPoolMock") private ExecutorService runExperimentsPoolMock;
-    @Mock private ExecutorService submitRunsPool;
-
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule(); // initialize the mocks according to @Mock annotation
-
+    // TODO - mock the services below
+    @Mock
+    private BenchFlowMinioClient minioMock;
+    @Mock
+    private DbManager dbMock;
+    @Mock
+    private FabanClient fabanMock;
+    @Mock
+    private DriversMaker driversMakerMock;
+    @Mock(name = "runExperimentsPool")
+    private ExecutorService runExperimentsPoolMock;
+    @Mock
+    private ExecutorService submitRunsPool;
     @InjectMocks
     private RunExperimentResource experimentResource;
 
@@ -79,6 +80,7 @@ public class RunExperimentResourceTest {
 
 
         exception.expect(WebApplicationException.class);
+        // TODO - change string below
         exception.expectMessage("400");
 
 

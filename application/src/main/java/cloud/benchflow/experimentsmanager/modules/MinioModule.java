@@ -13,24 +13,25 @@ import io.minio.errors.InvalidPortException;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 03/03/16.
+ *         <p>
+ *         Created on 03/03/16.
  */
-public class MinioModule extends AbstractModule{
+public class MinioModule extends AbstractModule {
 
     @Override
-    protected void configure() {}
+    protected void configure() {
+    }
 
     @Provides
     @Singleton
     @Named("minio")
     @Inject
-    public BenchFlowMinioClient provideMinio(ExperimentsManagerConfiguration ec, @Named("bfEnv")BenchFlowEnv benv)
+    public BenchFlowMinioClient provideMinio(ExperimentsManagerConfiguration ec, @Named("bfEnv") BenchFlowEnv benv)
             throws InvalidPortException, InvalidEndpointException {
         String minioAddress = ec.getMinioConfiguration().getAddress();
         String accessKey = benv.<String>getVariable("MINIO_ACCESS_KEY");
         String secretKey = benv.<String>getVariable("MINIO_SECRET_KEY");
-        return new BenchFlowMinioClient(minioAddress,accessKey,secretKey);
+        return new BenchFlowMinioClient(minioAddress, accessKey, secretKey);
     }
 
 }

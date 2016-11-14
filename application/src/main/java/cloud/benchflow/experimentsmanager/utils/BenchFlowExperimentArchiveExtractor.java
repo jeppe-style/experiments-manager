@@ -112,7 +112,7 @@ public class BenchFlowExperimentArchiveExtractor {
      * @return
      * @throws IOException
      */
-    String readZipEntry(ZipInputStream inputStream) throws IOException {
+    protected String readZipEntry(ZipInputStream inputStream) throws IOException {
 
         byte[] buffer = new byte[1024];
 

@@ -2,8 +2,8 @@ package cloud.benchflow.experimentsmanager.utils;
 
 import cloud.benchflow.experimentsmanager.db.entities.Experiment;
 import cloud.benchflow.experimentsmanager.resources.lifecycle.RunExperimentResource;
-import cloud.benchflow.experimentsmanager.testUtils.SetUpMocks;
-import cloud.benchflow.experimentsmanager.testUtils.TestArchive;
+import cloud.benchflow.experimentsmanager.testutils.SetUpMocks;
+import cloud.benchflow.experimentsmanager.testutils.TestArchive;
 import cloud.benchflow.experimentsmanager.utils.exceptions.ArchiveExtractionException;
 import cloud.benchflow.minio.BenchFlowMinioClient;
 import org.junit.Assert;
@@ -25,12 +25,10 @@ import java.util.zip.ZipInputStream;
 public class BenchFlowExperimentArchiveExtractorTest {
 
 
-    @Mock
-    private BenchFlowMinioClient minioClient = Mockito.mock(BenchFlowMinioClient.class);
-
     @Rule
     public ExpectedException exception = ExpectedException.none();
-
+    @Mock
+    private BenchFlowMinioClient minioClient = Mockito.mock(BenchFlowMinioClient.class);
     private BenchFlowExperimentArchiveExtractor extractor;
     private Experiment experiment;
     private ZipInputStream input;

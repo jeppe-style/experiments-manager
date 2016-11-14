@@ -4,17 +4,16 @@ import cloud.benchflow.experimentsmanager.db.entities.Experiment;
 import cloud.benchflow.experimentsmanager.db.entities.Trial;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.slf4j.Logger;
-
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 29/01/16.
+ *         <p>
+ *         Created on 29/01/16.
  */
 public class ExperimentsDAO implements AutoCloseable {
 
@@ -23,42 +22,6 @@ public class ExperimentsDAO implements AutoCloseable {
 
     public ExperimentsDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-    }
-
-    private static class ExperimentsDAOCommand<T> {
-
-        private Function<SessionFactory, T> function;
-        private Consumer<SessionFactory> consumer;
-
-        private String queryDescription;
-
-        public ExperimentsDAOCommand(Function<SessionFactory, T> command,
-                                     String queryDescription) {
-            this.function = command;
-            this.queryDescription = queryDescription;
-        }
-
-        public ExperimentsDAOCommand(Consumer<SessionFactory> command,
-                                     String queryDescription) {
-            this.consumer = command;
-            this.queryDescription = queryDescription;
-        }
-
-        public T execute(SessionFactory sf) {
-            //execute either the function, or the consumer (returning null)
-            if (function != null)
-                return function.apply(sf);
-            else {
-                consumer.accept(sf);
-                return null; //ugly, because java
-            }
-
-        }
-
-        public String getQueryDescription() {
-            return queryDescription;
-        }
-
     }
 
     public void saveExperiment(Experiment e) {
@@ -176,5 +139,41 @@ public class ExperimentsDAO implements AutoCloseable {
     @Override
     public void close() {
         sessionFactory.getCurrentSession().close();
+    }
+
+    private static class ExperimentsDAOCommand<T> {
+
+        private Function<SessionFactory, T> function;
+        private Consumer<SessionFactory> consumer;
+
+        private String queryDescription;
+
+        public ExperimentsDAOCommand(Function<SessionFactory, T> command,
+                                     String queryDescription) {
+            this.function = command;
+            this.queryDescription = queryDescription;
+        }
+
+        public ExperimentsDAOCommand(Consumer<SessionFactory> command,
+                                     String queryDescription) {
+            this.consumer = command;
+            this.queryDescription = queryDescription;
+        }
+
+        public T execute(SessionFactory sf) {
+            //execute either the function, or the consumer (returning null)
+            if (function != null)
+                return function.apply(sf);
+            else {
+                consumer.accept(sf);
+                return null; //ugly, because java
+            }
+
+        }
+
+        public String getQueryDescription() {
+            return queryDescription;
+        }
+
     }
 }

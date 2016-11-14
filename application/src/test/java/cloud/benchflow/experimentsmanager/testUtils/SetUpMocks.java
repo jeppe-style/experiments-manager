@@ -1,4 +1,4 @@
-package cloud.benchflow.experimentsmanager.testUtils;
+package cloud.benchflow.experimentsmanager.testutils;
 
 import cloud.benchflow.experimentsmanager.db.DbManager;
 import cloud.benchflow.experimentsmanager.db.ExperimentsDAO;
@@ -12,9 +12,6 @@ import cloud.benchflow.minio.BenchFlowMinioClient;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.mockito.AdditionalMatchers;
-import org.mockito.ArgumentMatcher;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.util.MockUtil;
 import org.mockito.mock.MockName;
@@ -84,7 +81,7 @@ public class SetUpMocks {
 
     public static void setUpDbManagerMocks(DbManager dbMock) throws IOException {
 
-        SessionFactory mockedSessionFactory =  Mockito.mock(SessionFactory.class);
+        SessionFactory mockedSessionFactory = Mockito.mock(SessionFactory.class);
         Session mockedSession = Mockito.mock(Session.class);
         Transaction mockedTransaction = Mockito.mock(Transaction.class);
 

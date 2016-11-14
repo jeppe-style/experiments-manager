@@ -4,21 +4,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 09/04/16.
+ *         <p>
+ *         Created on 09/04/16.
  */
 public class TrialStatusResponse {
+
+    @JsonProperty("trialId")
+    private String trialId;
+    @JsonProperty("status")
+    private String status;
 
     public TrialStatusResponse(String trialId, String status) {
         this.trialId = trialId;
         this.status = status;
     }
-
-    @JsonProperty("trialId")
-    private String trialId;
-
-    @JsonProperty("status")
-    private String status;
 
     public String getTrialId() {
         return trialId;

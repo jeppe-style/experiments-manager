@@ -25,8 +25,8 @@ import java.util.concurrent.Future;
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
  * @author Jesper Findahl (jesper.findahl@usi.ch)
- *
- * Created on 07.11.16.
+ *         <p>
+ *         Created on 07.11.16.
  */
 public class AsyncRunExperiment implements Runnable {
 

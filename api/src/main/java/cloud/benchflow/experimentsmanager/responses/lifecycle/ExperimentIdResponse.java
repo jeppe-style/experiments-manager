@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 28/06/16.
+ *         <p>
+ *         Created on 28/06/16.
  */
 public class ExperimentIdResponse {
 

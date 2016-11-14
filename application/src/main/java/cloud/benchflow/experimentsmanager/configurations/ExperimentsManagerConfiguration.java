@@ -1,12 +1,13 @@
 package cloud.benchflow.experimentsmanager.configurations;
 
-import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.dropwizard.Configuration;
 import io.dropwizard.client.HttpClientConfiguration;
-//import io.dropwizard.client.HttpClientConfiguration;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+//import io.dropwizard.client.HttpClientConfiguration;
 
 public class ExperimentsManagerConfiguration extends Configuration {
 
@@ -39,13 +40,13 @@ public class ExperimentsManagerConfiguration extends Configuration {
     private HttpClientConfiguration httpClient = new HttpClientConfiguration();
 
     @JsonProperty("http")
-    public void setHttpClientConfiguration(HttpClientConfiguration httpClient) {
-        this.httpClient = httpClient;
+    public HttpClientConfiguration getHttpClientConfiguration() {
+        return httpClient;
     }
 
     @JsonProperty("http")
-    public HttpClientConfiguration getHttpClientConfiguration() {
-        return httpClient;
+    public void setHttpClientConfiguration(HttpClientConfiguration httpClient) {
+        this.httpClient = httpClient;
     }
 
     @JsonProperty("drivers-maker")
@@ -59,14 +60,14 @@ public class ExperimentsManagerConfiguration extends Configuration {
     }
 
     @JsonProperty("faban")
-	public FabanConfiguration getFabanConfiguration() {
-		return fabanConfiguration;
-	}
+    public FabanConfiguration getFabanConfiguration() {
+        return fabanConfiguration;
+    }
 
     @JsonProperty("faban")
-	public void setFabanConfiguration(FabanConfiguration fabanConfiguration) {
-		this.fabanConfiguration = fabanConfiguration;
-	}
+    public void setFabanConfiguration(FabanConfiguration fabanConfiguration) {
+        this.fabanConfiguration = fabanConfiguration;
+    }
 
     @JsonProperty("database")
     public DbConfiguration getDbConfiguration() {

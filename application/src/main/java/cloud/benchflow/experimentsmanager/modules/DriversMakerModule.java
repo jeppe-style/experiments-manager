@@ -13,8 +13,8 @@ import org.apache.http.client.HttpClient;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 10/01/16.
+ *         <p>
+ *         Created on 10/01/16.
  */
 public class DriversMakerModule extends AbstractModule {
     @Override
@@ -32,11 +32,11 @@ public class DriversMakerModule extends AbstractModule {
         System.out.println(config.getHttpClientConfiguration().getTimeout());
 
         final HttpClient httpClient = new HttpClientBuilder(environment)
-                                      .using(config.getHttpClientConfiguration())
-                                      .build(environment.getName());
+                .using(config.getHttpClientConfiguration())
+                .build(environment.getName());
         DriversMakerConfiguration dmConfig = config.getDriversMakerConfiguration();
 //        HttpClient httpClient = HttpClients.createDefault();
-        return new DriversMaker(dmConfig.getAddress(),httpClient);
+        return new DriversMaker(dmConfig.getAddress(), httpClient);
     }
 
 }

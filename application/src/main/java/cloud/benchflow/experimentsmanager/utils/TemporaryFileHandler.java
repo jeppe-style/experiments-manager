@@ -8,8 +8,8 @@ import java.nio.file.Path;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 02/12/15.
+ *         <p>
+ *         Created on 02/12/15.
  */
 public class TemporaryFileHandler implements AutoCloseable {
 
@@ -20,7 +20,9 @@ public class TemporaryFileHandler implements AutoCloseable {
         this.file = path.toFile();//new File(path.toString());
     }
 
-    public File getFile() { return file; }
+    public File getFile() {
+        return file;
+    }
 
     @Override
     public void close() throws IOException {

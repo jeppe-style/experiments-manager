@@ -1,4 +1,4 @@
-package cloud.benchflow.experimentsmanager.testUtils;
+package cloud.benchflow.experimentsmanager.testutils;
 
 /**
  * @author Jesper Findahl (jesper.findahl@usi.ch)

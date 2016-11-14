@@ -1,7 +1,7 @@
 package cloud.benchflow.experimentsmanager.resources.lifecycle;
 
-import cloud.benchflow.experimentsmanager.db.ExperimentsDAO;
 import cloud.benchflow.experimentsmanager.db.DbManager;
+import cloud.benchflow.experimentsmanager.db.ExperimentsDAO;
 import cloud.benchflow.experimentsmanager.db.entities.Experiment;
 import cloud.benchflow.experimentsmanager.db.entities.Trial;
 import cloud.benchflow.experimentsmanager.exceptions.NoSuchExperimentIdException;
@@ -24,105 +24,105 @@ import javax.ws.rs.Produces;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 06/04/16.
+ *         <p>
+ *         Created on 06/04/16.
  */
 @Path("status")
 public class ExperimentStatusResource {
 
-   private static Logger logger = LoggerFactory.getLogger(ExperimentStatusResource.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(ExperimentStatusResource.class.getName());
 
-   private FabanClient faban;
-   private DbManager db;
+    private FabanClient faban;
+    private DbManager db;
 
-   @Inject
-   public ExperimentStatusResource(@Named("faban") FabanClient faban,
-                                   @Named("db") DbManager db) {
+    @Inject
+    public ExperimentStatusResource(@Named("faban") FabanClient faban,
+                                    @Named("db") DbManager db) {
         this.faban = faban;
         this.db = db;
-   }
+    }
 
 
-   @GET
-   @Path("{testName}/{experimentNumber}/{trialNumber}")
-   @Produces("application/vnd.experiments-manager.v2+json")
-   public TrialStatusResponse getTrialStatus(@PathParam("testName") String testName,
-                                             @PathParam("experimentNumber") long experimentNumber,
-                                             @PathParam("trialNumber") int trialNumber) {
+    @GET
+    @Path("{testName}/{experimentNumber}/{trialNumber}")
+    @Produces("application/vnd.experiments-manager.v2+json")
+    public TrialStatusResponse getTrialStatus(@PathParam("testName") String testName,
+                                              @PathParam("experimentNumber") long experimentNumber,
+                                              @PathParam("trialNumber") int trialNumber) {
 
-       String userId = "BenchFlow";
+        String userId = "BenchFlow";
 
-       try(ExperimentsDAO session = db.getExperimentsDAO()) {
+        try (ExperimentsDAO session = db.getExperimentsDAO()) {
 
-           Trial trial = session.getTrial(userId, testName, experimentNumber, trialNumber);
+            Trial trial = session.getTrial(userId, testName, experimentNumber, trialNumber);
 
-           if(trial == null)
-               throw new NoSuchTrialIdException(new Trial(userId,
-                                                          testName,
-                                                          experimentNumber,
-                                                          trialNumber).getTrialId());
-           if(trial.isSubmitted()) {
+            if (trial == null)
+                throw new NoSuchTrialIdException(new Trial(userId,
+                        testName,
+                        experimentNumber,
+                        trialNumber).getTrialId());
+            if (trial.isSubmitted()) {
 
-               String runId = trial.getFabanRunId();
-               try {
+                String runId = trial.getFabanRunId();
+                try {
 
-                   RunStatus.Code status = faban.status(new RunId(runId)).getStatus();
-                   if(status == RunStatus.Code.COMPLETED) {
-                       trial.setCompleted();
-                       session.update(trial);
-                   } else if(status == RunStatus.Code.FAILED) {
-                       trial.setFailed();
-                       session.update(trial);
-                   }
-                   return new TrialStatusResponse(trial.getTrialId(), status.name());
+                    RunStatus.Code status = faban.status(new RunId(runId)).getStatus();
+                    if (status == RunStatus.Code.COMPLETED) {
+                        trial.setCompleted();
+                        session.update(trial);
+                    } else if (status == RunStatus.Code.FAILED) {
+                        trial.setFailed();
+                        session.update(trial);
+                    }
+                    return new TrialStatusResponse(trial.getTrialId(), status.name());
 
-               } catch(RunIdNotFoundException e) {
-                   //this should never happen
-                   throw new NoSuchTrialIdException(trial.getTrialId());
-               }
+                } catch (RunIdNotFoundException e) {
+                    //this should never happen
+                    throw new NoSuchTrialIdException(trial.getTrialId());
+                }
 
-           } else {
-               return new TrialStatusResponse(trial.getTrialId(), trial.getStatus());
-           }
-       }
-   }
+            } else {
+                return new TrialStatusResponse(trial.getTrialId(), trial.getStatus());
+            }
+        }
+    }
 
-   @GET
-   @Path("{testName}/{experimentNumber}")
-   @Produces("application/vnd.experiments-manager.v2+json")
-   public ExperimentStatusResponse getExperimentStatus(@PathParam("testName") String testName,
-                                                       @PathParam("experimentNumber") long experimentNumber) {
+    @GET
+    @Path("{testName}/{experimentNumber}")
+    @Produces("application/vnd.experiments-manager.v2+json")
+    public ExperimentStatusResponse getExperimentStatus(@PathParam("testName") String testName,
+                                                        @PathParam("experimentNumber") long experimentNumber) {
 
-       String userId = "BenchFlow";
+        String userId = "BenchFlow";
 
-       try(ExperimentsDAO session = db.getExperimentsDAO()) {
+        try (ExperimentsDAO session = db.getExperimentsDAO()) {
 
-           Experiment experiment = session.getExperiment(userId, testName, experimentNumber);
+            Experiment experiment = session.getExperiment(userId, testName, experimentNumber);
 
-           if(experiment == null) {
-               Experiment exp = new Experiment(userId, testName);
-               exp.setExperimentNumber(experimentNumber);
-               throw new NoSuchExperimentIdException(exp.getExperimentId());
-           }
+            if (experiment == null) {
+                Experiment exp = new Experiment(userId, testName);
+                exp.setExperimentNumber(experimentNumber);
+                throw new NoSuchExperimentIdException(exp.getExperimentId());
+            }
 
-           ExperimentStatusResponse response =
-                   new ExperimentStatusResponse(experiment.getExperimentId(),
-                                                experiment.getStatus());
+            ExperimentStatusResponse response =
+                    new ExperimentStatusResponse(experiment.getExperimentId(),
+                            experiment.getStatus());
 
-           for(Trial t : experiment.getTrials()) {
-               response.addTrialStatus(getTrialStatus(testName, experimentNumber, t.getTrialNumber()));
-           }
+            for (Trial t : experiment.getTrials()) {
+                response.addTrialStatus(getTrialStatus(testName, experimentNumber, t.getTrialNumber()));
+            }
 
-           if(!(experiment.isCompleted() || experiment.isAborted()) &&
-              experiment.getTrials().stream().filter(Trial::isCompleted).count() == experiment.getTrials().size()) {
-               experiment.setCompleted();
-               response.setExperimentStatus(experiment.getStatus());
-               session.update(experiment);
-           }
+            if (!(experiment.isCompleted() || experiment.isAborted()) &&
+                    experiment.getTrials().stream().filter(Trial::isCompleted).count() == experiment.getTrials().size()) {
+                experiment.setCompleted();
+                response.setExperimentStatus(experiment.getStatus());
+                session.update(experiment);
+            }
 
-           return response;
+            return response;
 
-       }
-   }
+        }
+    }
 
 }

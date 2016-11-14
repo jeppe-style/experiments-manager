@@ -13,8 +13,8 @@ import java.net.URISyntaxException;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 10/01/16.
+ *         <p>
+ *         Created on 10/01/16.
  */
 public class FabanModule extends AbstractModule {
 
@@ -29,8 +29,8 @@ public class FabanModule extends AbstractModule {
         FabanConfiguration fabanConfig = config.getFabanConfiguration();
         return new FabanClient().withConfig(
                 new FabanClientConfigImpl(fabanConfig.getUser(),
-                                          fabanConfig.getPassword(),
-                                          new URI(fabanConfig.getAddress())));
+                        fabanConfig.getPassword(),
+                        new URI(fabanConfig.getAddress())));
     }
 
     @Provides

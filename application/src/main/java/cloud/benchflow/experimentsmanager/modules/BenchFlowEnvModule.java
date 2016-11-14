@@ -7,12 +7,13 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 import javax.inject.Named;
+
 import java.io.FileNotFoundException;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 03/03/16.
+ *         <p>
+ *         Created on 03/03/16.
  */
 public class BenchFlowEnvModule extends AbstractModule {
 
@@ -21,7 +22,8 @@ public class BenchFlowEnvModule extends AbstractModule {
 
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     @Named("bfEnv")
     public BenchFlowEnv provideBenchFlowEnv(ExperimentsManagerConfiguration config) throws FileNotFoundException {
         return new BenchFlowEnv(config.getBenchFlowEnvConfiguration().getConfigPath());

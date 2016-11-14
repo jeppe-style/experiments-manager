@@ -4,8 +4,8 @@ import javax.ws.rs.WebApplicationException;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 11/12/15.
+ *         <p>
+ *         Created on 11/12/15.
  */
 public class ExperimentRunException extends WebApplicationException {
 

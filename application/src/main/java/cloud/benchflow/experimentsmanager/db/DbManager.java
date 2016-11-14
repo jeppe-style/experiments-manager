@@ -17,8 +17,8 @@ import java.nio.file.Paths;
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
  * @author Jesper Findahl (jesper.findahl@usi.ch)
- *
- * Created on 07/03/16.
+ *         <p>
+ *         Created on 07/03/16.
  */
 public class DbManager {
 
@@ -48,8 +48,7 @@ public class DbManager {
 
             checkDatabaseSchema(dbConfig);
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
             throw new RuntimeException("Encountered a problem connecting to database " + dbConfig.getName(), e);
         }

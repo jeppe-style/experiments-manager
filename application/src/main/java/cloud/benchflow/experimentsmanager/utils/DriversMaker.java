@@ -1,9 +1,7 @@
 package cloud.benchflow.experimentsmanager.utils;
 
 import cloud.benchflow.experimentsmanager.exceptions.BenchmarkGenerationException;
-
 import com.google.gson.Gson;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -14,8 +12,8 @@ import java.io.IOException;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
- *
- * Created on 02/12/15.
+ *         <p>
+ *         Created on 02/12/15.
  */
 public class DriversMaker {
 
@@ -26,7 +24,7 @@ public class DriversMaker {
         this.address = address;
         this.http = http;
     }
-    
+
     public void generateBenchmark(String experimentName, long experimentNumber, int trials) {
 
         HttpPost post = new HttpPost(address + "/generatedriver");
@@ -41,9 +39,9 @@ public class DriversMaker {
         post.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
         try {
             HttpResponse response = http.execute(post);
-            if(response.getStatusLine().getStatusCode() >= 400) {
+            if (response.getStatusLine().getStatusCode() >= 400) {
                 throw new BenchmarkGenerationException("Error in benchmark generation",
-                                                    response.getStatusLine().getStatusCode());
+                        response.getStatusLine().getStatusCode());
             }
         } catch (IOException e) {
             throw new BenchmarkGenerationException(e.getMessage(), e);
@@ -55,7 +53,9 @@ public class DriversMaker {
         private String experimentName;
         private long experimentNumber;
         private int trials;
-        MakeDriverRequestBody() {}
+
+        MakeDriverRequestBody() {
+        }
 
         public void setExperimentName(String experimentName) {
             this.experimentName = experimentName;
