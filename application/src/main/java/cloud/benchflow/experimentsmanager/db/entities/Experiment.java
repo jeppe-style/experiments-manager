@@ -12,6 +12,7 @@ import java.util.Set;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
+ * @author Jesper Findahl (jesper.findahl@usi.ch)
  *
  * Created on 03/02/16.
  */
@@ -162,5 +163,17 @@ public class Experiment {
     public boolean isAborted() { return status == Status.ABORTED; }
 
     public void setAborted() { status = Status.ABORTED; }
+
+    public String getMinioExperimentId() {
+        return (username + "." + experimentName).replace('.', '/');
+    }
+
+    /**
+     * because Faban doesn't accept deployment of benchmarks with dots in the name
+     * @return
+     */
+    public String getFabanExperimentId() {
+        return getExperimentId().replace('.', '_');
+    }
 
 }

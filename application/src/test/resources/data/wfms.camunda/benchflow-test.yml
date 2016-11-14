@@ -1,0 +1,64 @@
+sut:
+  name: camunda
+  type: WfMS
+  version: 7.5.0
+
+testName: benchflow.testNameExample.1.1.1
+description: Test Description Example
+trials: 3
+
+users: 10
+execution:
+  rampUp: 10
+  steadyState: 60
+  rampDown: 10
+
+properties:
+    stats:
+        maxRunTime: 6
+        interval: 1
+
+drivers:
+- start:
+    configuration:
+      max90th: 60
+      mix: 
+        matrix:
+        - [ 20, 20, 20, 20, 20 ]
+        - [ 20, 20, 20, 20, 20 ]
+        - [ 20, 20, 20, 20, 20 ]
+        - [ 20, 20, 20, 20, 20 ]
+        - [ 20, 20, 20, 20, 20 ]
+    operations:
+    - activitiModel.bpmn
+    - camundaAdditionalApproval.bpmn
+    - camundaCounterpartyOnboarding.bpmn
+    - camundaInvoiceCollaboration.bpmn
+    - camundaOop.bpmn
+
+sutConfiguration:
+
+  targetService:
+    name: camunda
+    endpoint: /engine-rest
+
+  deploy:
+    camunda: testServerName
+    db: testServerName
+
+  benchflowConfig:
+    camunda:
+    - properties
+    - stats
+
+    db:
+    - mysql:
+        config:
+          MYSQL_DB_NAME: process-engine
+          MYSQL_USER: camunda
+          MYSQL_USER_PASSWORD: camunda
+          TABLE_NAMES: ACT_HI_PROCINST,ACT_HI_ACTINST
+          MYSQL_PORT: 3306
+          COMPLETION_QUERY: SELECT+COUNT(*)+FROM+ACT_HI_PROCINST+WHERE+END_TIME_+IS+NULL
+          COMPLETION_QUERY_VALUE: '0'
+          COMPLETION_QUERY_METHOD: equal

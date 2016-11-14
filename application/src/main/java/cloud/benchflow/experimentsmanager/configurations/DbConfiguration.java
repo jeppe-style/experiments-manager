@@ -11,6 +11,9 @@ public class DbConfiguration {
     private String user;
     private String name;
     private String password;
+    private String hibernateConfig; // relative path to hibernate.cfg.xml
+    private String createExperimentsTableQueryPath; // relative path to create-experiments-table.sql
+    private String createTrialsTableQueryPath; // relative path to create-trials-table.sql
 
     public String getName() {
         return name;
@@ -42,5 +45,29 @@ public class DbConfiguration {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHibernateConfig() {
+        return hibernateConfig;
+    }
+
+    public void setHibernateConfig(String hibernateConfig) {
+        this.hibernateConfig = hibernateConfig;
+    }
+
+    public String getCreateExperimentsTableQueryPath() {
+        return createExperimentsTableQueryPath;
+    }
+
+    public void setCreateExperimentsTableQueryPath(String createExperimentsTableQueryPath) {
+        this.createExperimentsTableQueryPath = createExperimentsTableQueryPath;
+    }
+
+    public String getCreateTrialsTableQueryPath() {
+        return createTrialsTableQueryPath;
+    }
+
+    public void setCreateTrialsTableQueryPath(String createTrialsTableQueryPath) {
+        this.createTrialsTableQueryPath = createTrialsTableQueryPath;
     }
 }

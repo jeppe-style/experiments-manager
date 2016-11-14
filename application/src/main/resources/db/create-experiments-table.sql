@@ -1,4 +1,4 @@
-create table EXPERIMENTS
+create table IF NOT EXISTS EXPERIMENTS
 (USERNAME varchar(255) not null,
 EXPERIMENT_NAME varchar(255) not null,
 EXPERIMENT_NUMBER bigint not null,

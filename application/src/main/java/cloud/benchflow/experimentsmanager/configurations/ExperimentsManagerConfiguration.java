@@ -78,12 +78,12 @@ public class ExperimentsManagerConfiguration extends Configuration {
         this.dbConfiguration = dbConfiguration;
     }
 
-    @JsonProperty("benchflow.env")
+    @JsonProperty("benchflowEnv")
     public BenchFlowEnvConfiguration getBenchFlowEnvConfiguration() {
         return benchFlowEnvConfiguration;
     }
 
-    @JsonProperty("benchflow.env")
+    @JsonProperty("benchflowEnv")
     public void setBenchFlowEnvConfiguration(BenchFlowEnvConfiguration benchFlowEnvConfiguration) {
         this.benchFlowEnvConfiguration = benchFlowEnvConfiguration;
     }

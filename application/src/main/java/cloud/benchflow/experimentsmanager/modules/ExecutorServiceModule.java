@@ -4,8 +4,6 @@ import cloud.benchflow.experimentsmanager.configurations.ExperimentsManagerConfi
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import io.dropwizard.lifecycle.Managed;
-import io.dropwizard.lifecycle.setup.LifecycleEnvironment;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.util.Duration;
 
@@ -42,7 +40,7 @@ public class ExecutorServiceModule extends AbstractModule {
 
     @Provides @Singleton
     @Named("runBenchmarkExecutorService")
-    public ExecutorService providesRunBenchmarkExecutorService(ExperimentsManagerConfiguration c, Environment env) {
+    public ExecutorService providesRunExperimentExecutorService(ExperimentsManagerConfiguration c, Environment env) {
         int cpus = Runtime.getRuntime().availableProcessors();
 
         return env.lifecycle().executorService("run-benchmark-%d")

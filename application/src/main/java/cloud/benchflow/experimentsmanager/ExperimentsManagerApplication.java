@@ -22,6 +22,7 @@ public class ExperimentsManagerApplication extends Application<ExperimentsManage
 
     @Override
     public void initialize(Bootstrap<ExperimentsManagerConfiguration> bootstrap) {
+
         bootstrap.addBundle(new TemplateConfigBundle());
 
         GuiceBundle<ExperimentsManagerConfiguration> guiceBundle =

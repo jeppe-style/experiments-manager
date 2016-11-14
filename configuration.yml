@@ -1,24 +1,28 @@
 #Dropwizard
 database:
   name: ${env.DB_NAME!"experiments"}
-  address: ${env.DB_ADDRESS}
+  address: ${env.DB_ADDRESS!"SET_ME"}
   user: ${env.DB_USER!"root"}
   password: ${env.DB_PASSWORD!""}
+  #  TODO - test that the below paths work in production
+  hibernateConfig: ./application/src/main/resources/hibernate.cfg.xml
+  createExperimentsTableQueryPath: ./application/src/main/resources/db/create-experiments-table.sql
+  createTrialsTableQueryPath: ./application/src/main/resources/db/create-trials-table.sql
 
-benchflow.env:
+benchflowEnv:
   config.yml: /app/config.yml
 
 drivers-maker:
-  address: ${env.DRIVERS_MAKER_ADDRESS}
+  address: ${env.DRIVERS_MAKER_ADDRESS!"SET_ME"}
 
 faban:
   user: ${env.FABAN_USER!""}
   password: ${env.FABAN_PASSWORD!""}
-  address: ${env.FABAN_ADDRESS}
+  address: ${env.FABAN_ADDRESS!"SET_ME"}
   submitRetries: ${env.FABAN_SUBMIT_RETRIES!5}
 
 minio:
-  address: ${env.MINIO_ADDRESS}
+  address: ${env.MINIO_ADDRESS!"SET_ME"}
 
 server:
   type: default

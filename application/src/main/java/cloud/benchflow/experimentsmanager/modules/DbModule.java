@@ -11,6 +11,7 @@ import io.dropwizard.setup.Environment;
 
 /**
  * @author Simone D'Avico (simonedavico@gmail.com)
+ * @auther Jesper Findahl (jesper.findahl@usi.ch)
  *
  * Created on 29/01/16.
  */
@@ -21,13 +22,14 @@ public class DbModule extends AbstractModule {
 
     @Provides @Singleton @Named("db")
     public DbManager provideDb(ExperimentsManagerConfiguration config, Environment env) {
+
         DbConfiguration dbConfig = config.getDbConfiguration();
 
 //        System.out.println(dbConfig.getAddress());
 //        System.out.println(dbConfig.getName());
 //        System.out.println(dbConfig.getUser());
 
-        return new DbManager(dbConfig.getAddress(), dbConfig.getName(), dbConfig.getUser(), dbConfig.getPassword());
+        return new DbManager(dbConfig);
     }
 
 }
