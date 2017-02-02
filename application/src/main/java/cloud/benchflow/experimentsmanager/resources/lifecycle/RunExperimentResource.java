@@ -125,7 +125,8 @@ public class RunExperimentResource {
 
             minio.saveTestConfigurationForExperiment(experiment.getMinioExperimentId(), experiment.getExperimentNumber(), expConfig);
             minio.saveDeploymentDescriptorForExperiment(experiment.getMinioExperimentId(), experiment.getExperimentNumber(), deploymentDescriptor);
-            runExperimentsPool.submit(new AsyncRunExperiment(experiment, experimentsDAO, minio, faban, driversMaker, submitRunsPool, submitRetries));
+            runExperimentsPool.submit(new AsyncRunExperiment(experiment,
+                    experimentsDAO, minio, faban, driversMaker, submitRunsPool, submitRetries));
 
         } catch (Exception e) {
 
