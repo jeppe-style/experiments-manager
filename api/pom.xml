@@ -3,9 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cloud.benchflow</groupId>
-        <artifactId>experiments-manager</artifactId>
+        <artifactId>benchflow-experiment-manager</artifactId>
         <version>0.1.0</version>
     </parent>
     <groupId>cloud.benchflow.experiments-manager</groupId>
     <artifactId>api</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-core</artifactId>
+        </dependency>
+    </dependencies>
 </project>

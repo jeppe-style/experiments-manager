@@ -1,29 +1,7 @@
-#Dropwizard
-database:
-  name: ${env.DB_NAME!"experiments"}
-  address: ${env.DB_ADDRESS!"SET_ME"}
-  user: ${env.DB_USER!"root"}
-  password: ${env.DB_PASSWORD!""}
-  #  TODO - test that the below paths work in production
-  hibernateConfig: ./application/src/main/resources/hibernate.cfg.xml
-  createExperimentsTableQueryPath: ./application/src/main/resources/db/create-experiments-table.sql
-  createTrialsTableQueryPath: ./application/src/main/resources/db/create-trials-table.sql
-
-benchflowEnv:
-  config.yml: /app/config.yml
-
-drivers-maker:
-  address: ${env.DRIVERS_MAKER_ADDRESS!"SET_ME"}
-
-faban:
-  user: ${env.FABAN_USER!""}
-  password: ${env.FABAN_PASSWORD!""}
-  address: ${env.FABAN_ADDRESS!"SET_ME"}
-  submitRetries: ${env.FABAN_SUBMIT_RETRIES!5}
-
-minio:
-  address: ${env.MINIO_ADDRESS!"SET_ME"}
-
+#######################################################################
+# Dropwizard
+# http://www.dropwizard.io/1.0.6/docs/manual/configuration.html#man-configuration
+#######################################################################
 server:
   type: default
   applicationConnectors:
@@ -35,7 +13,8 @@ server:
       port: 8081
       #bindHost: 127.0.0.1 # only bind to loopback
 
-http:
+jerseyClient:
+  # httpClient
   timeout: 20000ms
   connectionTimeout: 5000ms
   timeToLive: 1h
@@ -44,15 +23,68 @@ http:
   maxConnectionsPerRoute: 1024
   keepAlive: 0ms
   retries: 3
+  userAgent: BenchFlow (BenchFlowExperimentManager)
+  # jerseyClient additional
+  minThreads: 1
+  maxThreads: 128
+  workQueueSize: 8
+  gzipEnabled: true
+  gzipEnabledForRequests: true
+  chunkedEncodingEnabled: true
 
 logging:
   level: INFO
   loggers:
     io.dropwizard: INFO
-    cloud.benchflow.experimentsmanager.resources.lifecycle.RunBenchmarkResource: ALL
-    cloud.benchflow.experimentsmanager.resources.lifecycle.DeployBenchmarkResource: ALL
+    # TODO - log the right resources
+#    cloud.benchflow.experimentsmanager.resources.lifecycle.RunBenchmarkResource: ALL
+#    cloud.benchflow.experimentsmanager.resources.lifecycle.DeployBenchmarkResource: ALL
   appenders:
     - type: console
       threshold: ALL
       timeZone: UTC
       target: stdout
+
+
+#######################################################################
+# Libraries
+#######################################################################
+
+swagger:
+  resourcePackage: cloud.benchflow.performancetestmanager.resources
+
+
+#######################################################################
+# BenchFlow
+#######################################################################
+
+benchFlowEnvironment:
+  config.yml: /app/config.yml
+
+mongoDB:
+  hostname: ${env.MONGO_DB_ADDRESS!"localhost"}
+  port: ${env.MONGO_DB_PORT!"27017"}
+  # TODO - we want to authenticate?
+
+minio:
+  address: ${env.MINIO_ADDRESS!"http://127.0.0.1:9000"}
+  accessKey: ${env.MINIO_ACCESS_KEY!"minio"}
+  secretKey: ${env.MINIO_SECRET_KEY!"minio123"}
+
+faban:
+  user: ${env.FABAN_USER!""}
+  password: ${env.FABAN_PASSWORD!""}
+  address: ${env.FABAN_ADDRESS!"SET_ME"}
+  submitRetries: ${env.FABAN_SUBMIT_RETRIES!3}
+
+driversMaker:
+  address: ${env.DRIVERS_MAKER_ADDRESS!"SET_ME"}
+
+testManager:
+  address: ${env.TEST_MANAGER_ADDRESS!"SET_ME"}
+
+# TODO - @VF shall we remove this or keep for future?
+# currently not used, instead default with poolSize == 1
+taskExecutor:
+  minThreads: 5
+  maxThreads: 15

@@ -20,3 +20,4 @@ application/.classpath
 application/src/test/resources/configuration.properties
 
 benchflow_make
+application/src/test/resources/mongo-data

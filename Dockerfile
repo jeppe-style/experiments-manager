@@ -9,7 +9,7 @@ RUN wget -q --no-check-certificate -O /app/benchflow-experiments-manager.jar htt
 
 COPY configuration.yml /app/
 
-# copy resources (db configurations)
+# copy resources (experimentDAO configurations)
 COPY ./application/src/main/resources/ /app/application/src/main/resources
 
 COPY ./services/envcp/config.tpl /app/config.tpl

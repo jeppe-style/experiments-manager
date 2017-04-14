@@ -13,7 +13,7 @@ services:
     ports:
       - 8080:8080
 
-  db:
+  experimentDAO:
     image: 'mysql:latest'
     environment:
       - MYSQL_DATABASE=process-engine
